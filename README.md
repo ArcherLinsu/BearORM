@@ -6,7 +6,7 @@
 
 ---
 
-[更新日志](./Update_log.md)	[API文档](./API.md)
+[更新日志](./Update_log.md)	[API文档](./API_CN.md)
 
 ---
 
