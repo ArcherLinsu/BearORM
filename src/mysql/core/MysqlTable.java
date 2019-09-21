@@ -1,4 +1,8 @@
-package slip.mysql;
+package slip.mysql.core;
+
+import slip.mysql.base.Execute;
+import slip.mysql.base.SQL;
+import slip.mysql.util.FormatData;
 
 import java.sql.Connection;
 import java.util.LinkedList;
@@ -12,6 +16,13 @@ public class MysqlTable {
     private Class bean = null;
     private String tableName = null;
     private Connection connection = null;
+
+    /**
+     * 连接所有表
+     */
+    public MysqlTable(Connection connection) {
+        this.connection = connection;
+    }
 
     /**
      * 根据表名连接到指定表
@@ -30,12 +41,21 @@ public class MysqlTable {
         this.tableName = bean.getSimpleName().toLowerCase();
     }
 
-    /**
-     * 连接所有表
-     */
-    public MysqlTable(Connection connection) {
-        this.connection = connection;
+    public List<String> showTables() {
+        if (tableName != null) {
+            List<Map> tables = Execute.selectExecute(this.connection, SQL.showTables());
+            List<String> results = new LinkedList<>();
+            for (Map table : tables) {
+                String tb = (String) table.get("table");
+                results.add(tb);
+            }
+            return results;
+        } else {
+            System.out.println("正处于" + tableName + "表中，无法查看所有表信息");
+            return null;
+        }
     }
+
 
     /**
      * 获取指定表下的所有数据
@@ -70,8 +90,8 @@ public class MysqlTable {
     /**
      * 根据一个或多个条件进行查询
      */
-    public List select(Map condition) {
-        List<Map> resultsMap = Execute.selectExecute(this.connection, SQL.select(tableName, condition));
+    public List select(Map conditions) {
+        List<Map> resultsMap = Execute.selectExecute(this.connection, SQL.select(tableName, conditions));
         List results = new LinkedList();
         if (bean != null) {
             for (Map map : resultsMap) {
@@ -86,17 +106,29 @@ public class MysqlTable {
     /**
      * 将一个实例插入到数据库
      */
-    public <T> int insert(T bean) {
-        return Execute.otherExecute(this.connection, SQL.insert(this.tableName, FormatData.toMap(bean)));
+    public <T> int insert(T data) {
+        return Execute.otherExecute(this.connection, SQL.insert(this.tableName, FormatData.toMap(data)));
+    }
+
+    public int insert(Map data) {
+        return Execute.otherExecute(this.connection, SQL.insert(this.tableName, data));
     }
 
     /**
      * 将多个实例插入数据库
      */
-    public <T> int insertMany(List<T> beans) {
+    public <T> int insertMany(List<T> datas) {
         int flag = 0;
-        for (T bean : beans) {
-            flag += Execute.otherExecute(this.connection, SQL.insert(this.tableName, FormatData.toMap(bean)));
+        for (T data : datas) {
+            flag += Execute.otherExecute(this.connection, SQL.insert(this.tableName, FormatData.toMap(data)));
+        }
+        return flag;
+    }
+
+    public int insertManyByMap(List<Map> datas) {
+        int flag = 0;
+        for (Map data : datas) {
+            flag += Execute.otherExecute(this.connection, SQL.insert(this.tableName, data));
         }
         return flag;
     }
@@ -104,17 +136,29 @@ public class MysqlTable {
     /**
      * 根据一个实例删除对应数据
      */
-    public <T> int delete(T bean) {
-        return Execute.otherExecute(this.connection, SQL.delete(this.tableName, FormatData.toMap(bean)));
+    public <T> int delete(T data) {
+        return Execute.otherExecute(this.connection, SQL.delete(this.tableName, FormatData.toMap(data)));
+    }
+
+    public int delete(Map data) {
+        return Execute.otherExecute(this.connection, SQL.delete(this.tableName, data));
     }
 
     /**
      * 根据多个实例删除对应数据
      */
-    public <T> int deleteMany(List<T> beans) {
+    public <T> int deleteMany(List<T> datas) {
         int flag = 0;
-        for (T bean : beans) {
-            flag += Execute.otherExecute(this.connection, SQL.delete(this.tableName, FormatData.toMap(bean)));
+        for (T data : datas) {
+            flag += Execute.otherExecute(this.connection, SQL.delete(this.tableName, FormatData.toMap(data)));
+        }
+        return flag;
+    }
+
+    public int deleteManyByMap(List<Map> datas) {
+        int flag = 0;
+        for (Map data : datas) {
+            flag += Execute.otherExecute(this.connection, SQL.delete(this.tableName, data));
         }
         return flag;
     }
@@ -124,5 +168,9 @@ public class MysqlTable {
      */
     public <T> int update(T oldBean, T newBean) {
         return Execute.otherExecute(this.connection, SQL.update(this.tableName, FormatData.toMap(newBean), FormatData.toMap(oldBean)));
+    }
+
+    public int update(Map oldData, Map newData) {
+        return Execute.otherExecute(this.connection, SQL.update(this.tableName, newData, oldData));
     }
 }

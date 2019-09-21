@@ -28,7 +28,7 @@
 | [MysqlDatabase](#slip.mysql.core.MysqlDatabase) | 从MysqlClient获取数据库入口，对数据库进行管理、操作并对外提供表入口 |          |          |
 |    [MysqlTable](#slip.mysql.core.MysqlTable)    |        从MysqlDatabase获取表入口，对表进行管理、操作         |          |          |
 
-#### slip.util
+### slip.util
 
 |                    类名                    |                摘要                 | 实现接口 | 直接子类 |
 | :----------------------------------------: | :---------------------------------: | :------: | :------: |
@@ -53,7 +53,7 @@
 | public static String **delete**(String tableName, Map conditions) |    通过参数返回对应的delete语句    |          conditions参数为被删除数据的一个或多个条件          |
 | public static String **update**(String tableName, Map data, Map conditions) |    通过参数返回对应的update语句    | data参数为新数据，conditions参数为被修改数据的一个或多个条件 |
 | public static String **select**(String tableName, Map conditions) |    通过参数返回对应的select语句    |           conditions参数为查询数据的一个或多个条件           |
-|      public static String **select(**String tableName)       | 无参数返回查询所有数据的select语句 |                              ~                               |
+|      public static String **select**(String tableName)       | 无参数返回查询所有数据的select语句 |                              ~                               |
 
 ### slip.mysql.core.MysqlClient
 
@@ -80,16 +80,16 @@
 |                             方法                             |            摘要            |                           注意事项                           |
 | :----------------------------------------------------------: | :------------------------: | :----------------------------------------------------------: |
 | public **MysqlTable**(Connection connection, String tableName) |        获取指定的表        |                                                              |
-|   public **MysqlTable**(Connection connection, Class bean)   |    将实体类和表进行关联    |                                                              |
+|   public **MysqlTable**(Connection connection, Class data)   |    将实体类和表进行关联    |                                                              |
 |         public **MysqlTable**(Connection connection)         |      获取所有表的信息      |                                                              |
-|                 public List **selectList()**                 |      得到表中所有数据      | 如果没有关联实体类，则返回一个List<Map>结果集，如果已关联实体类则返回对应的List<T>结果集 |
-|              public <T> List **select(T bean)**              |      根据对象查询数据      |                              ~                               |
-|            public List **select**(Map condition)             | 根据一个或多个条件查询数据 |                              ~                               |
-|              public <T> int **insert**(T bean)               |    将一个对象插入数据库    |                                                              |
-|        public <T> int **insertMany**（List<T> beans)         |    将多个对象插入数据库    |                                                              |
-|              public <T> int **delete**(T bean)               |      删除一个对象数据      |                                                              |
-|         public <T> int **deleteMany**(List<T> beans)         |      删除多个对象数据      |                                                              |
-|       public <T> int **update(**T oldBean, T newBean)        |      更新一个对象数据      |           oldBean为原对象数据，newBean为新对象数据           |
+|                 public List **selectList**()                 |      得到表中所有数据      | 如果没有关联实体类，则返回一个List<Map>结果集，如果已关联实体类则返回对应的List<T>结果集 |
+|              public <T> List **select**(T data)              |      根据对象查询数据      |                              ~                               |
+|            public List **select**(Map conditions)            | 根据一个或多个条件查询数据 |                              ~                               |
+|              public <T> int **insert**(T data)               |    将一个对象插入数据库    |                                                              |
+|        public <T> int **insertMany**（List<T> datas)         |    将多个对象插入数据库    |                                                              |
+|              public <T> int **delete**(T data)               |      删除一个对象数据      |                                                              |
+|         public <T> int **deleteMany**(List<T> datas)         |      删除多个对象数据      |                                                              |
+|       public <T> int **update**(T olddata, T newdata)        |      更新一个对象数据      |           olddata为原对象数据，newdata为新对象数据           |
 |                                                              |                            |                                                              |
 |                                                              |                            |                                                              |
 |                                                              |                            |                                                              |

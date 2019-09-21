@@ -1,4 +1,4 @@
-package slip.mysql;
+package slip.mysql.core;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -63,13 +63,5 @@ public class MysqlClient {
      */
     public MysqlDatabase getDatabases() {
         return new MysqlDatabase(this.connection);
-    }
-
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }

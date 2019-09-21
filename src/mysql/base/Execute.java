@@ -1,4 +1,4 @@
-package slip.mysql;
+package slip.mysql.base;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -27,9 +27,11 @@ public class Execute {
                 Map mapTemp = new HashMap();
                 for (int i = 1; i <= resultSet.getMetaData().getColumnCount(); i++) {
                     if (resultSet.getMetaData().getColumnTypeName(i).equals("VARCHAR")) {
-                        mapTemp.put(resultSet.getMetaData().getColumnName(i), resultSet.getString(i));
+                        mapTemp.put(resultSet.getMetaData().getColumnName(i).toLowerCase(), resultSet.getString(i));
                     } else if (resultSet.getMetaData().getColumnTypeName(i).equals("INT")) {
-                        mapTemp.put(resultSet.getMetaData().getColumnName(i), resultSet.getInt(i));
+                        mapTemp.put(resultSet.getMetaData().getColumnName(i).toLowerCase(), resultSet.getInt(i));
+                    }else {
+                        mapTemp.put(resultSet.getMetaData().getColumnName(i).toLowerCase(), resultSet.getString(i));
                     }
                 }
                 listTemp.add(mapTemp);

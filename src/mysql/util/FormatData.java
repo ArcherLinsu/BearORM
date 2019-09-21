@@ -1,4 +1,4 @@
-package slip.mysql;
+package slip.mysql.util;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -53,6 +53,5 @@ public class FormatData {
             }
         }
         return map;
-
     }
 }
