@@ -1,4 +1,4 @@
-package slip.mysql.util;
+package mysql.util;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

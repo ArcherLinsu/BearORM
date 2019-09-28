@@ -1,4 +1,4 @@
-package slip.mysql.core;
+package mysql.core;
 
 import slip.mysql.base.Execute;
 import slip.mysql.base.SQL;

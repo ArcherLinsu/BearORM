@@ -1,4 +1,4 @@
-package slip.mysql.core;
+package mysql.core;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

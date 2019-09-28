@@ -1,4 +1,4 @@
-package slip.mysql.pool;
+package mysql.pool;
 
 import java.sql.*;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package slip.mysql.base;
+package mysql.base;
 
 import java.sql.*;
 import java.util.HashMap;

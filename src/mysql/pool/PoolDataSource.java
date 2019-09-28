@@ -1,4 +1,4 @@
-package slip.mysql.pool;
+package mysql.pool;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;
