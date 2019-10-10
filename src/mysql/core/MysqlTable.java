@@ -1,4 +1,4 @@
-package mysql.core;
+package slip.mysql.core;
 
 import slip.mysql.base.Execute;
 import slip.mysql.base.SQL;
@@ -58,7 +58,7 @@ public class MysqlTable {
 
 
     /**
-     * 获取指定表下的所有数据
+     * 获取所有数据
      */
     public List selectList() {
         List<Map> resultsMap = Execute.selectExecute(this.connection, SQL.select(tableName));
@@ -74,7 +74,7 @@ public class MysqlTable {
     }
 
     /**
-     * 根据实例查询数据
+     * 条件查询
      */
     public <T> List select(T bean) {
         List<Map> resultsMap = Execute.selectExecute(this.connection, SQL.select(tableName, FormatData.toMap(bean)));
@@ -87,9 +87,6 @@ public class MysqlTable {
         return results;
     }
 
-    /**
-     * 根据一个或多个条件进行查询
-     */
     public List select(Map conditions) {
         List<Map> resultsMap = Execute.selectExecute(this.connection, SQL.select(tableName, conditions));
         List results = new LinkedList();
@@ -104,7 +101,7 @@ public class MysqlTable {
     }
 
     /**
-     * 将一个实例插入到数据库
+     * 单条插入
      */
     public <T> int insert(T data) {
         return Execute.otherExecute(this.connection, SQL.insert(this.tableName, FormatData.toMap(data)));
@@ -115,7 +112,7 @@ public class MysqlTable {
     }
 
     /**
-     * 将多个实例插入数据库
+     * 多条插入
      */
     public <T> int insertMany(List<T> datas) {
         int flag = 0;
@@ -134,7 +131,7 @@ public class MysqlTable {
     }
 
     /**
-     * 根据一个实例删除对应数据
+     * 条件删除
      */
     public <T> int delete(T data) {
         return Execute.otherExecute(this.connection, SQL.delete(this.tableName, FormatData.toMap(data)));
@@ -145,7 +142,7 @@ public class MysqlTable {
     }
 
     /**
-     * 根据多个实例删除对应数据
+     * 多类条件删除
      */
     public <T> int deleteMany(List<T> datas) {
         int flag = 0;
@@ -164,7 +161,7 @@ public class MysqlTable {
     }
 
     /**
-     * 用一个新的实例替换旧的实例数据
+     * 更新数据
      */
     public <T> int update(T oldBean, T newBean) {
         return Execute.otherExecute(this.connection, SQL.update(this.tableName, FormatData.toMap(newBean), FormatData.toMap(oldBean)));

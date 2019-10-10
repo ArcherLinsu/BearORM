@@ -1,6 +1,5 @@
-package mysql.pool;
+package slip.mysql.pool;
 
-import javax.sql.DataSource;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,7 +9,7 @@ import java.util.logging.Logger;
 /**
  * 描述: 实现数据源类
  */
-public class PoolDataSource implements DataSource {
+public class DataSource implements javax.sql.DataSource {
 
     private String driverName;
     private String url;
@@ -22,9 +21,9 @@ public class PoolDataSource implements DataSource {
     /**
      * 连接池的对象
      */
-    private ConnectionPoolImpl connectionPoolImpl;
+    private Pool pool;
 
-    public PoolDataSource(String driverName, String url, String username, String userpwd, Integer initPoolSize, Integer maxIdleTime, Integer maxPoolSize) {
+    public DataSource(String driverName, String url, String username, String userpwd, Integer initPoolSize, Integer maxIdleTime, Integer maxPoolSize) {
         this.driverName = driverName;
         this.url = url;
         this.username = username;
@@ -34,11 +33,11 @@ public class PoolDataSource implements DataSource {
         this.maxPoolSize = maxPoolSize;
 
         // 给连接设置数据源，因为PoolConnectionImpl负责创建连接需要数据源信息
-        PoolConnectionImpl.setPoolDataSource(this);
+        ConnectionImpl.setDataSource(this);
 
         // 启动连接池的实现
-        connectionPoolImpl = new ConnectionPoolImpl(this);
-        connectionPoolImpl.init();
+        pool = new Pool(this);
+        pool.init();
     }
 
     public String getDriverName() {
@@ -76,7 +75,7 @@ public class PoolDataSource implements DataSource {
      */
     @Override
     public Connection getConnection() throws SQLException {
-        return connectionPoolImpl.getConnection();
+        return pool.getConnection();
     }
 
     /**

@@ -1,6 +1,5 @@
-package mysql.pool;
+package slip.mysql.pool;
 
-import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
@@ -13,7 +12,7 @@ public class BasicDataSourceFactory {
      * @param pro
      * @return
      */
-    public DataSource getDataSource(Properties pro){
+    public javax.sql.DataSource getDataSource(Properties pro){
         String driver = pro.getProperty("driverName");
         if(driver == null){
             throw new IllegalArgumentException("连接池-驱动的配置项名称不正确，请检查!");
@@ -50,11 +49,11 @@ public class BasicDataSourceFactory {
         }
 
         // 数据源对象，存储了连接数据库的详细信息
-        PoolDataSource poolDataSource = new PoolDataSource(driver, url, username, userpwd,
+        DataSource dataSource = new DataSource(driver, url, username, userpwd,
                 Integer.parseInt(initPoolSize),
                 Integer.parseInt(maxIdleTime),
                 Integer.parseInt(maxPoolSize));
 
-        return poolDataSource;
+        return dataSource;
     }
 }

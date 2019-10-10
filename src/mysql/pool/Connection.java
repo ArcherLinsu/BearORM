@@ -1,4 +1,4 @@
-package mysql.pool;
+package slip.mysql.pool;
 
 import java.sql.*;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.concurrent.Executor;
 /**
  * 描述: 连接池过滤类，把不想实现的Connection接口方法拦截在这里
  */
-public abstract class PoolConnection implements Connection {
+public abstract class Connection implements java.sql.Connection {
     @Override
     public Statement createStatement() throws SQLException {
         return null;
